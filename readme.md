@@ -2,11 +2,11 @@
 
 This repo serves to help you get started with the EmbedJS library (`@llm-tools/embedjs`) for implementing RAG in your own Node.js applications.
 
-## RAG resources
+## Environment Variables
 
-- ["Applied AI Software Engineering: RAG" on The Pragmatic Engineer](https://newsletter.pragmaticengineer.com/p/rag?utm_source=post-email-title&publication_id=458709&post_id=144625800&utm_campaign=email-post-title&isFreemail=true&r=37d10&triedRedirect=true&utm_medium=email): a solid primer if you're looking a high-level explantion of RAG for app developers
-- ["RAG in Node.js with EmbedJS"](https://www.ashryan.io/rag-in-node-js-with-embedjs/): an article I wrote that discusses this repo in a bit more depth
-- [llm-tools/embedJs on GitHub](https://github.com/llm-tools/embedJs): the library this RAG example uses
+To run this project, you will need to add the following environment variables to your .env file
+
+`CLIENT_TOKEN ` = 'MTI4...'
 
 ## Requirements
 
@@ -14,37 +14,44 @@ This repo serves to help you get started with the EmbedJS library (`@llm-tools/e
 - npm 10+
 - An OpenAI API key
 
-## Install
+## Run Locally
 
-Install the repo and its dependencies like this:
-
-```bash
-git clone REPO_URL
-cd embedjs-rag
-npm install
-```
-
-## Configure
-
-Create a new file called `.env`:
+Clone the project
 
 ```bash
-touch .env
+  git clone https://github.com/gungho0619/embedjs-starter.git
 ```
 
-In your new `.env` file, add a variable for your OpenAI API key and add your key:
-
-```text
-OPENAI_API_KEY=your_key_here
-```
-
-## Usage
-
-You can run the script with or without prompt as a command line argument:
+Go to the project directory
 
 ```bash
-npm start # No prompt (the script has a default)
-npm start "What does Ash write about?"
+  cd embedjs-starter
 ```
 
-The output will print in your terminal.
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+## Tech Stack
+
+Node, Express, OpenAI, embedjs
+
+## Badges
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) [![GPLv3 License](https://img.shields.io/badge/License-Flamingo-red.svg)](https://opensource.org/licenses/)
+
+## Authors
+
+- [Flamingo](https://www.github.com/gungho0619)
+
+## Feedback
+
+If you have any feedback, please reach out to me via [mail](tzztson@gmail.com) or [telegram](https://t.me/gungho0619)
