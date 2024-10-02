@@ -2,58 +2,53 @@ import "dotenv/config";
 import path from "path";
 import {
   RAGApplicationBuilder,
-  SIMPLE_MODELS,
   OpenAi,
   WebLoader,
+  PdfLoader
 } from "@llm-tools/embedjs";
 import { LanceDb } from "@llm-tools/embedjs/vectorDb/lance";
-
-/**
- * Retrieves the prompt based on the command line arguments.
- * If no arguments are provided, a default prompt is returned.
- * @returns {string} The prompt to be used.
- */
-
 
 /**
  * Retrieves the RAG application with the specified configuration.
  * @returns {Promise<RAGApplication>} The RAG application.
  */
 const getRagApplication = async () => {
-  console.log("Getting RAG application...");
+  try {
+    console.log("Getting RAG application...");
 
-  const ragApplication = await new RAGApplicationBuilder()
-    .setModel(new OpenAi({ modelName: 'gpt-4' }))
-    .setSearchResultCount(10)
-    .setVectorDb(new LanceDb({ path: path.resolve("./db") }))
-    .addLoader(new WebLoader({ urlOrContent: "https://github.com" }))
-    .build();
+    // Using the URL for the PDF file
+    const pdfUrl = 'https://gungho0619.vercel.app/resume.pdf';
 
-  console.log("Built RAG application with: ", ragApplication.model.modelName);
+    const ragApplication = await new RAGApplicationBuilder()
+      .setModel(new OpenAi({ modelName: 'gpt-4' }))  // Using GPT-4 model
+      .setVectorDb(new LanceDb({ path: path.resolve("./db") }))  // Vector database path
+      .addLoader(new WebLoader({ urlOrContent: 'https://gungho0619.vercel.app/' }))
+      .addLoader(new PdfLoader({ filePathOrUrl: pdfUrl }))  // Loading the PDF from URL
+      .build();
 
-  return ragApplication;
-};
-
-/**
- * Prints the output of the RAG query.
- * @param {Object} output - The output object containing the result and sources.
- */
-const printOutput = (output) => {
-  console.log(`
-    ${output.result}
-
-    Sourced from:
-    ${output.sources.map((url) => "-" + url).join("\n")}
-  `);
+    console.log("Built RAG application with:", ragApplication.model.modelName);
+    return ragApplication;
+  } catch (error) {
+    console.error("Error while getting RAG application:", error);
+    throw error;
+  }
 };
 
 /**
  * The main function that executes the RAG query.
  */
 const main = async () => {
-  const ragApplication = await getRagApplication();
-  const res = await ragApplication.query("What is GitHub?");
-  console.log(res)
+  try {
+    const ragApplication = await getRagApplication();  // Get the RAG app instance
+    console.log("Querying the RAG application...");
+
+    // Query the model with a fixed prompt
+    const res = await ragApplication.query("what's the Hose Address of Akira?");
+    console.log("Response:", res);
+  } catch (error) {
+    console.error("Error during the RAG query execution:", error);
+  }
 };
 
+// Run the main function
 main();
